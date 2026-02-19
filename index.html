@@ -8,21 +8,22 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0f172a;
-      --surface: #1e293b;
-      --surface2: #263347;
-      --border: #334155;
-      --accent: #38bdf8;
-      --accent2: #818cf8;
-      --text: #f1f5f9;
-      --muted: #94a3b8;
-      --rain: #60a5fa;
-      --fair: #fbbf24;
-      --radius: 14px;
+      --bg:        #ffffff;
+      --surface:   #ffffff;
+      --surface2:  #efefef;
+      --surface3:  #cfe2f3;
+      --border:    #dde5ef;
+      --accent:    #1155cc;
+      --accent-lt: #cfe2f3;
+      --text:      #000000;
+      --muted:     #5a6a80;
+      --muted2:    #8fa0b4;
+      --radius:    12px;
+      --radius-sm: 8px;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -30,13 +31,28 @@
 
     /* ── Header ── */
     header {
-      background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
-      padding: 24px 24px 18px;
+      background: var(--accent);
+      padding: 28px 24px 22px;
       text-align: center;
+      color: #fff;
     }
-    header h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; }
-    header p  { font-size: 0.85rem; opacity: 0.85; margin-top: 4px; }
-    #last-updated { font-size: 0.75rem; opacity: 0.7; margin-top: 5px; }
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    header p {
+      font-size: 0.82rem;
+      opacity: 0.8;
+      margin-top: 4px;
+      font-weight: 300;
+    }
+    #last-updated {
+      font-size: 0.72rem;
+      opacity: 0.65;
+      margin-top: 5px;
+      font-weight: 300;
+    }
 
     /* Location bar */
     #location-bar {
@@ -44,46 +60,48 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      margin-top: 12px;
+      margin-top: 14px;
       flex-wrap: wrap;
     }
     #location-info {
-      font-size: 0.82rem;
-      background: rgba(255,255,255,0.15);
+      font-size: 0.8rem;
+      background: rgba(255,255,255,0.18);
       border-radius: 20px;
       padding: 5px 14px;
       display: flex;
       align-items: center;
       gap: 7px;
+      font-weight: 400;
     }
     #location-info .loc-dot {
-      width: 8px; height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
-      background: #4ade80;
+      background: #7ee8a2;
       flex-shrink: 0;
       animation: pulse 2s infinite;
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
     #detect-btn {
       font-size: 0.78rem;
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.3);
+      font-family: inherit;
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.5);
       border-radius: 20px;
-      padding: 5px 14px;
-      color: white;
+      padding: 6px 16px;
+      color: #fff;
       cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 0.02em;
       transition: background 0.2s;
     }
-    #detect-btn:hover { background: rgba(255,255,255,0.3); }
+    #detect-btn:hover { background: rgba(255,255,255,0.28); }
 
     /* ── Tabs ── */
     .tabs {
       display: flex;
       background: var(--surface);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--border);
       overflow-x: auto;
       scrollbar-width: none;
     }
@@ -94,17 +112,23 @@
       padding: 14px 10px;
       text-align: center;
       font-size: 0.82rem;
-      font-weight: 500;
+      font-weight: 700;
       color: var(--muted);
       cursor: pointer;
       border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
       transition: all 0.2s;
       white-space: nowrap;
+      font-family: inherit;
+      background: none;
+      border-left: none;
+      border-right: none;
+      border-top: none;
     }
-    .tab:hover { color: var(--text); background: var(--surface2); }
+    .tab:hover { color: var(--accent); background: var(--accent-lt); }
     .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-    main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+    main { max-width: 960px; margin: 0 auto; padding: 24px 16px 56px; }
 
     /* ── Loader ── */
     #loader {
@@ -115,9 +139,10 @@
       gap: 16px;
       min-height: 300px;
       color: var(--muted);
+      font-weight: 300;
     }
     .spinner {
-      width: 40px; height: 40px;
+      width: 36px; height: 36px;
       border: 3px solid var(--border);
       border-top-color: var(--accent);
       border-radius: 50%;
@@ -127,183 +152,210 @@
 
     /* ── Error ── */
     #error-msg {
-      background: #450a0a;
-      border: 1px solid #7f1d1d;
-      border-radius: var(--radius);
-      padding: 16px 20px;
-      color: #fca5a5;
-      margin-bottom: 20px;
-      display: none;
-    }
-
-    .section-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin: 24px 0 12px;
-    }
-
-    /* ── Your Location Banner ── */
-    #your-location-banner {
-      background: linear-gradient(90deg, #0f3460 0%, #1a1a4e 100%);
-      border: 1px solid #3b4f8a;
+      background: #fff0f0;
+      border: 1.5px solid #f5c6c6;
       border-radius: var(--radius);
       padding: 14px 18px;
-      margin-bottom: 6px;
+      color: #b91c1c;
+      margin-bottom: 20px;
       display: none;
-      align-items: center;
-      gap: 14px;
+      font-size: 0.85rem;
     }
-    #your-location-banner .loc-icon { font-size: 1.8rem; }
-    #your-location-banner .loc-body { flex: 1; }
-    #your-location-banner .loc-label { font-size: 0.7rem; color: #93c5fd; text-transform: uppercase; letter-spacing: 0.06em; }
-    #your-location-banner .loc-area  { font-size: 1rem; font-weight: 700; }
-    #your-location-banner .loc-region { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
-    #your-location-banner .loc-forecast { font-size: 0.85rem; color: #bfdbfe; margin-top: 6px; }
 
-    /* ── 4-Day ── */
+    /* ── Section title (H2 Subhead style) ── */
+    .section-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 28px 0 12px;
+    }
+
+    /* ── 4-Day Forecast ── */
     .four-day-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
     }
     .day-card {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px 16px;
-      transition: transform 0.15s;
+      padding: 20px 18px;
+      transition: box-shadow 0.15s, transform 0.15s;
     }
-    .day-card:hover { transform: translateY(-2px); }
-    .day-card .day-name { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-    .day-card .day-date { font-size: 1rem; font-weight: 700; margin-top: 2px; }
-    .day-card .day-icon { font-size: 2.6rem; margin: 12px 0 8px; }
-    .day-card .day-forecast { font-size: 0.85rem; color: var(--muted); margin-bottom: 10px; line-height: 1.4; }
-    .day-card .day-summary  { font-size: 0.78rem; color: var(--accent2); margin-bottom: 12px; font-style: italic; line-height: 1.4; }
-    .day-stats { display: flex; flex-direction: column; gap: 6px; }
-    .stat-row  { display: flex; justify-content: space-between; align-items: center; font-size: 0.79rem; }
-    .stat-label { color: var(--muted); }
-    .stat-value { font-weight: 600; }
-    .temp-range { color: var(--fair); }
-    .humidity-range { color: var(--rain); }
-    .wind-info { color: var(--muted); }
+    .day-card:hover {
+      box-shadow: 0 4px 16px rgba(17,85,204,0.1);
+      transform: translateY(-2px);
+    }
+    .day-card .day-name {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .day-card .day-date {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-top: 2px;
+      color: var(--text);
+    }
+    .day-card .day-icon {
+      font-size: 2.8rem;
+      margin: 14px 0 10px;
+      display: block;
+    }
+    .day-card .day-forecast {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .day-card .day-summary {
+      font-size: 0.77rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 14px;
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .day-stats {
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .stat-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; }
+    .stat-label { color: var(--muted); font-weight: 300; }
+    .stat-value { font-weight: 700; }
+    .temp-range    { color: var(--accent); }
+    .humidity-range{ color: #0ea5e9; }
+    .wind-info     { color: var(--muted); }
 
-    /* ── 24-Hour Regional ── */
+    /* ── General 24-hr summary ── */
+    .general-summary {
+      background: var(--accent-lt);
+      border: 1.5px solid #b3cfea;
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-bottom: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+    }
+    .general-icon { font-size: 3rem; }
+    .general-info { flex: 1; min-width: 200px; }
+    .general-forecast { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+    .general-valid { font-size: 0.78rem; font-weight: 300; color: var(--muted); margin-top: 3px; }
+    .general-meta { display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap; }
+    .general-meta span { font-size: 0.82rem; color: var(--muted); font-weight: 300; }
+    .general-meta strong { color: var(--text); font-weight: 700; }
+
+    /* ── 24-Hour Regional cards ── */
     .region-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+      gap: 12px;
     }
     .region-card {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
       transition: box-shadow 0.2s;
     }
+    .region-card:hover { box-shadow: 0 4px 16px rgba(17,85,204,0.08); }
     .region-card.my-region {
       border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(56,189,248,0.25);
+      box-shadow: 0 0 0 3px var(--accent-lt);
     }
     .region-header {
-      padding: 11px 14px 9px;
+      padding: 11px 14px;
       font-weight: 700;
-      font-size: 0.9rem;
-      background: var(--surface2);
-      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+      background: var(--accent);
+      color: #fff;
       display: flex;
       align-items: center;
       gap: 8px;
     }
+    .region-card.my-region .region-header { background: var(--accent); }
     .region-header .you-badge {
       margin-left: auto;
-      font-size: 0.62rem;
-      background: var(--accent);
-      color: #0f172a;
+      font-size: 0.6rem;
+      background: #fff;
+      color: var(--accent);
       border-radius: 4px;
       padding: 2px 6px;
       font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
-    .region-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .period-rows { padding: 10px 14px; display: flex; flex-direction: column; gap: 10px; }
+    .region-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .period-rows { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
     .period-row {
       display: flex;
       flex-direction: column;
       gap: 3px;
       padding: 8px 10px;
       background: var(--surface2);
-      border-radius: 8px;
-      font-size: 0.8rem;
+      border-radius: var(--radius-sm);
     }
-    .period-time { color: var(--muted); font-size: 0.72rem; }
+    .period-time { color: var(--muted2); font-size: 0.7rem; font-weight: 300; }
     .period-main { display: flex; align-items: center; gap: 7px; }
-    .period-icon { font-size: 1.15rem; flex-shrink: 0; }
-    .period-text { color: var(--text); font-weight: 500; line-height: 1.35; }
-
-    /* General 24hr */
-    .general-summary {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      margin-bottom: 6px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      align-items: center;
-    }
-    .general-icon { font-size: 3rem; }
-    .general-info { flex: 1; min-width: 200px; }
-    .general-forecast { font-size: 1.1rem; font-weight: 600; }
-    .general-meta { display: flex; gap: 20px; margin-top: 8px; flex-wrap: wrap; }
-    .general-meta span { font-size: 0.82rem; color: var(--muted); }
-    .general-meta strong { color: var(--text); }
+    .period-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .period-text { color: var(--text); font-weight: 700; font-size: 0.8rem; line-height: 1.35; }
 
     /* ── 2-Hour ── */
-    /* Search / filter bar */
     .two-hr-controls {
       display: flex;
       gap: 10px;
-      align-items: center;
-      margin-bottom: 16px;
+      align-items: stretch;
+      margin-bottom: 18px;
       flex-wrap: wrap;
     }
     .two-hr-valid {
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: var(--accent-lt);
+      border: 1.5px solid #b3cfea;
       border-radius: var(--radius);
-      padding: 11px 16px;
+      padding: 12px 18px;
       font-size: 0.85rem;
+      font-weight: 300;
       color: var(--muted);
       flex: 1;
       min-width: 200px;
+      display: flex;
+      align-items: center;
     }
-    .two-hr-valid strong { color: var(--accent); }
+    .two-hr-valid strong { color: var(--accent); font-weight: 700; }
 
-    /* Custom dropdown */
-    .dropdown-wrap {
-      position: relative;
-    }
+    /* Dropdown */
+    .dropdown-wrap { position: relative; }
     .dropdown-toggle {
       display: flex;
       align-items: center;
       gap: 8px;
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 11px 16px;
       font-size: 0.83rem;
+      font-family: inherit;
+      font-weight: 700;
       color: var(--text);
       cursor: pointer;
       white-space: nowrap;
-      transition: border-color 0.2s;
-      min-width: 160px;
+      transition: border-color 0.2s, background 0.2s;
+      min-width: 170px;
     }
-    .dropdown-toggle:hover { border-color: var(--accent); }
-    .dropdown-toggle .arrow { margin-left: auto; color: var(--muted); font-size: 0.7rem; transition: transform 0.2s; }
+    .dropdown-toggle:hover { border-color: var(--accent); background: var(--accent-lt); }
+    .dropdown-toggle .arrow { margin-left: auto; color: var(--muted2); font-size: 0.65rem; transition: transform 0.2s; }
+    .dropdown-toggle.open { border-color: var(--accent); background: var(--accent-lt); }
     .dropdown-toggle.open .arrow { transform: rotate(180deg); }
 
     .dropdown-menu {
@@ -311,127 +363,167 @@
       top: calc(100% + 6px);
       right: 0;
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      min-width: 220px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      min-width: 230px;
+      max-height: 340px;
+      overflow-y: auto;
       z-index: 100;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
       display: none;
     }
     .dropdown-menu.open { display: block; }
 
-    .dd-search-wrap {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-    }
+    .dd-search-wrap { padding: 10px 12px; border-bottom: 1px solid var(--border); }
     .dd-search {
       width: 100%;
       background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 7px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
       padding: 7px 10px;
       font-size: 0.82rem;
+      font-family: inherit;
       color: var(--text);
       outline: none;
     }
-    .dd-search::placeholder { color: var(--muted); }
+    .dd-search::placeholder { color: var(--muted2); }
     .dd-search:focus { border-color: var(--accent); }
 
-    .dd-group-label {
-      padding: 8px 12px 4px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .dd-group-label:hover { background: var(--surface2); color: var(--text); }
-    .dd-group-label.selected { color: var(--accent); }
-    .dd-option {
-      padding: 8px 14px 8px 24px;
-      font-size: 0.82rem;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .dd-option:hover { background: var(--surface2); }
-    .dd-option.selected { color: var(--accent); font-weight: 600; }
-    .dd-option.hidden-opt { display: none; }
-
     .dd-all-option {
-      padding: 9px 14px;
+      padding: 10px 14px;
       font-size: 0.82rem;
+      font-weight: 700;
       cursor: pointer;
       border-bottom: 1px solid var(--border);
       transition: background 0.15s;
       color: var(--accent);
-      font-weight: 500;
     }
-    .dd-all-option:hover { background: var(--surface2); }
-    .dd-no-results { padding: 12px 14px; font-size: 0.82rem; color: var(--muted); text-align: center; }
+    .dd-all-option:hover { background: var(--accent-lt); }
 
-    .area-region-section { margin-bottom: 24px; }
+    .dd-group-label {
+      padding: 8px 12px 4px;
+      font-size: 0.67rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .dd-group-label:hover { background: var(--accent-lt); color: var(--accent); }
+    .dd-group-label.selected { color: var(--accent); background: var(--accent-lt); }
+
+    .dd-option {
+      padding: 8px 14px 8px 26px;
+      font-size: 0.82rem;
+      font-weight: 300;
+      cursor: pointer;
+      transition: background 0.15s;
+      color: var(--text);
+    }
+    .dd-option:hover { background: var(--surface2); }
+    .dd-option.selected { color: var(--accent); font-weight: 700; background: var(--accent-lt); }
+    .dd-option.hidden-opt { display: none; }
+    .dd-no-results { padding: 14px; font-size: 0.82rem; color: var(--muted2); text-align: center; font-weight: 300; }
+
+    /* Area sections */
+    .area-region-section { margin-bottom: 26px; }
     .area-region-title {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       font-weight: 700;
       margin-bottom: 10px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+      color: var(--text);
     }
     .area-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
       gap: 8px;
     }
     .area-card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
       padding: 12px 12px 10px;
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      transition: border-color 0.2s;
+      transition: box-shadow 0.15s, border-color 0.15s;
     }
+    .area-card:hover { box-shadow: 0 2px 10px rgba(17,85,204,0.08); border-color: #b3cfea; }
     .area-card.my-area {
       border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(56,189,248,0.2);
+      background: var(--accent-lt);
     }
-    .area-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
-    .area-name { font-size: 0.8rem; font-weight: 600; line-height: 1.3; }
-    .area-forecast-text { font-size: 0.72rem; color: var(--muted); margin-top: 2px; line-height: 1.3; }
+    .area-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 1px; }
+    .area-name { font-size: 0.8rem; font-weight: 700; line-height: 1.3; color: var(--text); }
+    .area-forecast-text { font-size: 0.72rem; font-weight: 300; color: var(--muted); margin-top: 2px; line-height: 1.3; }
 
-    /* Region color dots */
-    .north-dot   { background: #22d3ee; }
-    .south-dot   { background: #a3e635; }
-    .east-dot    { background: #fb923c; }
-    .west-dot    { background: #e879f9; }
-    .central-dot { background: #fbbf24; }
+    /* Location banner */
+    .loc-banner {
+      background: var(--accent-lt);
+      border: 1.5px solid #b3cfea;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .loc-banner-icon { font-size: 1.8rem; }
+    .loc-banner-label { font-size: 0.67rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; }
+    .loc-banner-area  { font-size: 1rem; font-weight: 700; color: var(--text); margin-top: 2px; }
+    .loc-banner-region{ font-size: 0.78rem; font-weight: 300; color: var(--muted); }
+    .loc-banner-fc    { font-size: 0.85rem; font-weight: 700; color: var(--accent); margin-top: 4px; }
 
-    /* Refresh */
+    /* Region color dots (kept distinct) */
+    .north-dot   { background: #0ea5e9; }
+    .south-dot   { background: #16a34a; }
+    .east-dot    { background: #ea580c; }
+    .west-dot    { background: #9333ea; }
+    .central-dot { background: #ca8a04; }
+
+    /* Refresh button */
     .refresh-btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 8px 16px;
-      font-size: 0.82rem;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 18px;
+      font-size: 0.8rem;
+      font-family: inherit;
+      font-weight: 700;
       color: var(--muted);
       cursor: pointer;
       transition: all 0.2s;
       margin-top: 16px;
+      letter-spacing: 0.02em;
     }
-    .refresh-btn:hover { color: var(--text); border-color: var(--accent); }
+    .refresh-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-lt); }
+
+    /* Today badge */
+    .today-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.62rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
 
     .hidden { display: none !important; }
   </style>
@@ -469,11 +561,10 @@
 <script>
 const BASE = 'https://api-open.data.gov.sg/v2/real-time/api';
 
-// ── State ─────────────────────────────────────────────────────────────────────
-let userRegion  = null;   // 'north' | 'south' | 'east' | 'west' | 'central'
-let userArea    = null;   // closest named area string
-let cachedData2 = null;   // last 2-hr API payload
-let selectedFilter = 'all'; // dropdown filter value
+let userRegion     = null;
+let userArea       = null;
+let cachedData2    = null;
+let selectedFilter = 'all';
 
 // ── Weather icon ──────────────────────────────────────────────────────────────
 function weatherIcon(text) {
@@ -481,33 +572,33 @@ function weatherIcon(text) {
   const t = text.toLowerCase();
   if (t.includes('heavy thundery') && t.includes('gusty')) return '🌪️';
   if (t.includes('heavy thundery')) return '⛈️';
-  if (t.includes('thundery')) return '🌩️';
+  if (t.includes('thundery'))       return '🌩️';
   if (t.includes('heavy shower') || t.includes('heavy rain')) return '🌧️';
-  if (t.includes('shower') || t.includes('passing shower')) return '🌦️';
-  if (t.includes('moderate rain')) return '🌧️';
+  if (t.includes('passing shower')) return '🌦️';
+  if (t.includes('shower'))         return '🌦️';
+  if (t.includes('moderate rain'))  return '🌧️';
   if (t.includes('light rain') || t.includes('light shower')) return '🌦️';
-  if (t.includes('rain')) return '🌧️';
-  if (t.includes('fog')) return '🌫️';
-  if (t.includes('mist')) return '🌫️';
+  if (t.includes('rain'))           return '🌧️';
+  if (t.includes('fog'))            return '🌫️';
+  if (t.includes('mist'))           return '🌫️';
   if (t.includes('hazy') || t.includes('haze')) return '😶‍🌫️';
-  if (t.includes('windy')) return '💨';
-  if (t.includes('partly cloudy')) return '⛅';
-  if (t.includes('cloudy')) return '☁️';
-  if (t.includes('fair and warm')) return '🌤️';
-  if (t.includes('fair')) return '☀️';
+  if (t.includes('windy'))          return '💨';
+  if (t.includes('partly cloudy'))  return '⛅';
+  if (t.includes('cloudy'))         return '☁️';
+  if (t.includes('fair and warm'))  return '🌤️';
+  if (t.includes('fair'))           return '☀️';
   return '🌡️';
 }
 
-// ── Region config ─────────────────────────────────────────────────────────────
+// ── Regions ───────────────────────────────────────────────────────────────────
 const REGIONS = {
-  north:   { label: 'North',   dotClass: 'north-dot' },
-  south:   { label: 'South',   dotClass: 'south-dot' },
-  east:    { label: 'East',    dotClass: 'east-dot'  },
-  west:    { label: 'West',    dotClass: 'west-dot'  },
+  north:   { label: 'North',   dotClass: 'north-dot'   },
+  south:   { label: 'South',   dotClass: 'south-dot'   },
+  east:    { label: 'East',    dotClass: 'east-dot'    },
+  west:    { label: 'West',    dotClass: 'west-dot'    },
   central: { label: 'Central', dotClass: 'central-dot' },
 };
 
-// Singapore region bounding boxes [latMin, latMax, lonMin, lonMax]
 const REGION_BOUNDS = {
   north:   [1.390, 1.480, 103.670, 103.900],
   south:   [1.220, 1.300, 103.780, 103.900],
@@ -517,33 +608,31 @@ const REGION_BOUNDS = {
 };
 
 function latLonToRegion(lat, lon) {
-  // Check each region; return first match
   for (const [region, [latMin, latMax, lonMin, lonMax]] of Object.entries(REGION_BOUNDS)) {
     if (lat >= latMin && lat <= latMax && lon >= lonMin && lon <= lonMax) return region;
   }
-  return 'central'; // fallback
+  return 'central';
 }
 
-// Area → region mapping
 const AREA_REGION = {
-  'Ang Mo Kio': 'north', 'Bishan': 'central', 'Bukit Batok': 'west',
-  'Bukit Merah': 'central', 'Bukit Panjang': 'west', 'Bukit Timah': 'central',
-  'Bedok': 'east', 'Boon Lay': 'west', 'Choa Chu Kang': 'west',
-  'Changi': 'east', 'Clementi': 'west', 'City': 'central',
-  'Geylang': 'east', 'Hougang': 'north', 'Joo Chiat': 'east',
-  'Jurong East': 'west', 'Jurong West': 'west', 'Kallang': 'central',
-  'Lim Chu Kang': 'north', 'Mandai': 'north', 'Marine Parade': 'east',
-  'Novena': 'central', 'Pasir Ris': 'east', 'Paya Lebar': 'east',
-  'Punggol': 'north', 'Queenstown': 'central', 'Seletar': 'north',
-  'Sembawang': 'north', 'Sengkang': 'north', 'Serangoon': 'north',
-  'Simei': 'east', 'Tampines': 'east', 'Tengah': 'west',
-  'Toa Payoh': 'central', 'Tuas': 'west', 'Woodlands': 'north',
-  'Yishun': 'north', 'Queensway': 'central', 'West Coast': 'west',
-  'Whampoa': 'central', 'Kranji': 'north', 'Buona Vista': 'west',
-  'Dover': 'west', 'Kent Ridge': 'west', 'Sentosa': 'central',
-  'Harbourfront': 'central', 'Tanjong Pagar': 'central', 'Chinatown': 'central',
-  'Clarke Quay': 'central', 'Dhoby Ghaut': 'central', 'Orchard': 'central',
-  'Newton': 'central', 'Botanic Gardens': 'central',
+  'Ang Mo Kio':'north','Bishan':'central','Bukit Batok':'west',
+  'Bukit Merah':'central','Bukit Panjang':'west','Bukit Timah':'central',
+  'Bedok':'east','Boon Lay':'west','Choa Chu Kang':'west',
+  'Changi':'east','Clementi':'west','City':'central',
+  'Geylang':'east','Hougang':'north','Joo Chiat':'east',
+  'Jurong East':'west','Jurong West':'west','Kallang':'central',
+  'Lim Chu Kang':'north','Mandai':'north','Marine Parade':'east',
+  'Novena':'central','Pasir Ris':'east','Paya Lebar':'east',
+  'Punggol':'north','Queenstown':'central','Seletar':'north',
+  'Sembawang':'north','Sengkang':'north','Serangoon':'north',
+  'Simei':'east','Tampines':'east','Tengah':'west',
+  'Toa Payoh':'central','Tuas':'west','Woodlands':'north',
+  'Yishun':'north','Queensway':'central','West Coast':'west',
+  'Whampoa':'central','Kranji':'north','Buona Vista':'west',
+  'Dover':'west','Kent Ridge':'west','Sentosa':'central',
+  'Harbourfront':'central','Tanjong Pagar':'central','Chinatown':'central',
+  'Clarke Quay':'central','Dhoby Ghaut':'central','Orchard':'central',
+  'Newton':'central','Botanic Gardens':'central',
 };
 
 function getRegion(area) {
@@ -554,14 +643,11 @@ function getRegion(area) {
   return 'central';
 }
 
-// Find nearest area from area_metadata given lat/lon
 function nearestArea(lat, lon, areaMetadata) {
   if (!areaMetadata || !areaMetadata.length) return null;
   let best = null, bestDist = Infinity;
   for (const a of areaMetadata) {
-    const dlat = a.label_location.latitude - lat;
-    const dlon = a.label_location.longitude - lon;
-    const d = dlat * dlat + dlon * dlon;
+    const d = Math.pow(a.label_location.latitude - lat, 2) + Math.pow(a.label_location.longitude - lon, 2);
     if (d < bestDist) { bestDist = d; best = a.name; }
   }
   return best;
@@ -572,57 +658,37 @@ function detectLocation() {
   const btn = document.getElementById('detect-btn');
   btn.textContent = '⏳ Locating…';
   btn.disabled = true;
+  if (!navigator.geolocation) { btn.textContent = '📍 Not supported'; btn.disabled = false; return; }
 
-  if (!navigator.geolocation) {
-    btn.textContent = '📍 Not supported';
+  navigator.geolocation.getCurrentPosition(pos => {
+    const { latitude: lat, longitude: lon } = pos.coords;
+    userRegion = latLonToRegion(lat, lon);
+    if (cachedData2?.items?.[0]) userArea = nearestArea(lat, lon, cachedData2.area_metadata);
+
+    document.getElementById('location-info').style.display = 'flex';
+    document.getElementById('location-text').textContent =
+      `${REGIONS[userRegion].label} Region${userArea ? ' · ' + userArea : ''}`;
+    btn.textContent = '↺ Re-detect';
     btn.disabled = false;
-    return;
-  }
 
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      const lat = pos.coords.latitude;
-      const lon = pos.coords.longitude;
-      userRegion = latLonToRegion(lat, lon);
-
-      // Find nearest named area if we have 2-hr data
-      if (cachedData2 && cachedData2.items && cachedData2.items[0]) {
-        userArea = nearestArea(lat, lon, cachedData2.area_metadata);
-      }
-
-      // Update header badge
-      const locInfo = document.getElementById('location-info');
-      locInfo.style.display = 'flex';
-      document.getElementById('location-text').textContent =
-        `${REGIONS[userRegion].label} Region${userArea ? ' · ' + userArea : ''}`;
-
-      btn.textContent = '↺ Re-detect';
-      btn.disabled = false;
-
-      // Re-render with location awareness
-      if (cachedData2) render2Hr(cachedData2.items, cachedData2.area_metadata);
-      rerenderLocationBanner();
-      highlightMyRegion();
-    },
-    err => {
-      btn.textContent = '📍 Detect My Location';
-      btn.disabled = false;
-      alert('Location access denied or unavailable.');
-    },
-    { timeout: 10000 }
-  );
+    if (cachedData2) render2Hr(cachedData2.items, cachedData2.area_metadata);
+    highlightMyRegion();
+  }, () => {
+    btn.textContent = '🌍 Detect My Location';
+    btn.disabled = false;
+    alert('Location access denied or unavailable.');
+  }, { timeout: 10000 });
 }
 
 function highlightMyRegion() {
-  // Highlight the correct card in 24-hr tab
-  document.querySelectorAll('.region-card').forEach(card => {
-    card.classList.toggle('my-region', card.dataset.region === userRegion);
-    const badge = card.querySelector('.you-badge');
-    if (badge) badge.style.display = card.dataset.region === userRegion ? '' : 'none';
+  document.querySelectorAll('.region-card').forEach(c => {
+    c.classList.toggle('my-region', c.dataset.region === userRegion);
+    const b = c.querySelector('.you-badge');
+    if (b) b.style.display = c.dataset.region === userRegion ? '' : 'none';
   });
 }
 
-// ── Fetch ──────────────────────────────────────────────────────────────────────
+// ── Fetch ─────────────────────────────────────────────────────────────────────
 async function fetchAPI(path) {
   const res = await fetch(BASE + path);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -632,19 +698,10 @@ async function fetchAPI(path) {
 }
 
 // ── Date helpers ──────────────────────────────────────────────────────────────
-function toSGT(s) {
-  return new Date(new Date(s).toLocaleString('en-US', { timeZone: 'Asia/Singapore' }));
-}
-function formatDay(s) {
-  return toSGT(s).toLocaleDateString('en-SG', { weekday: 'long' });
-}
-function formatShortDate(s) {
-  const d = toSGT(s);
-  return d.toLocaleDateString('en-SG', { day: 'numeric', month: 'short' });
-}
-function formatTime(s) {
-  return toSGT(s).toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit', hour12: true });
-}
+function toSGT(s) { return new Date(new Date(s).toLocaleString('en-US', { timeZone: 'Asia/Singapore' })); }
+function formatDay(s)       { return toSGT(s).toLocaleDateString('en-SG', { weekday: 'long' }); }
+function formatShortDate(s) { return toSGT(s).toLocaleDateString('en-SG', { day: 'numeric', month: 'short' }); }
+function formatTime(s)      { return toSGT(s).toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit', hour12: true }); }
 function isToday(s) {
   const d = toSGT(s);
   const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Singapore' }));
@@ -664,7 +721,7 @@ document.querySelectorAll('.tab').forEach(tab => {
 // ── Render: 4-Day ─────────────────────────────────────────────────────────────
 function render4Day(records) {
   const el = document.getElementById('tab-four-day');
-  if (!records || !records.length) { el.innerHTML = '<p style="color:var(--muted)">No data.</p>'; return; }
+  if (!records?.length) { el.innerHTML = '<p style="color:var(--muted)">No data available.</p>'; return; }
 
   const forecasts = records[0].forecasts;
   const updatedAt = records[0].updatedTimestamp;
@@ -675,18 +732,17 @@ function render4Day(records) {
     const icon = weatherIcon(f.forecast?.text);
     const dayLabel = f.day || formatDay(f.timestamp);
     const dateLabel = formatShortDate(f.timestamp);
-    const todayBadge = isToday(f.timestamp)
-      ? ' <span style="background:#38bdf820;color:var(--accent);font-size:0.65rem;padding:2px 6px;border-radius:4px;font-weight:700;text-transform:uppercase">Today</span>' : '';
+    const todayBadge = isToday(f.timestamp) ? '<span class="today-badge">Today</span>' : '';
 
     html += `
       <div class="day-card">
         <div class="day-name">${dayLabel}${todayBadge}</div>
         <div class="day-date">${dateLabel}</div>
-        <div class="day-icon">${icon}</div>
+        <span class="day-icon">${icon}</span>
         <div class="day-forecast">${f.forecast?.text || '—'}</div>
         ${f.forecast?.summary ? `<div class="day-summary">${f.forecast.summary}</div>` : ''}
         <div class="day-stats">
-          <div class="stat-row"><span class="stat-label">🌡️ Temp</span><span class="stat-value temp-range">${f.temperature?.low ?? '—'}° – ${f.temperature?.high ?? '—'}°C</span></div>
+          <div class="stat-row"><span class="stat-label">🌡️ Temperature</span><span class="stat-value temp-range">${f.temperature?.low ?? '—'}° – ${f.temperature?.high ?? '—'}°C</span></div>
           <div class="stat-row"><span class="stat-label">💧 Humidity</span><span class="stat-value humidity-range">${f.relativeHumidity?.low ?? '—'} – ${f.relativeHumidity?.high ?? '—'}%</span></div>
           <div class="stat-row"><span class="stat-label">💨 Wind</span><span class="stat-value wind-info">${f.wind?.direction ?? '—'} ${f.wind?.speed?.low ?? '—'}–${f.wind?.speed?.high ?? '—'} km/h</span></div>
         </div>
@@ -694,16 +750,16 @@ function render4Day(records) {
   });
 
   html += `</div>`;
-  if (updatedAt) html += `<button class="refresh-btn" onclick="loadAll()">&#8635; Refresh</button><p style="font-size:0.75rem;color:var(--muted);margin-top:8px">Updated: ${formatTime(updatedAt)} SGT</p>`;
+  if (updatedAt) html += `<button class="refresh-btn" onclick="loadAll()">&#8635;&ensp;Refresh</button><p style="font-size:0.73rem;color:var(--muted2);margin-top:8px;font-weight:300">Data updated: ${formatTime(updatedAt)} SGT</p>`;
   el.innerHTML = html;
 }
 
 // ── Render: 24-Hour ───────────────────────────────────────────────────────────
 function render24Hr(records) {
   const el = document.getElementById('tab-twenty-four');
-  if (!records || !records.length) { el.innerHTML = '<p style="color:var(--muted)">No data.</p>'; return; }
+  if (!records?.length) { el.innerHTML = '<p style="color:var(--muted)">No data available.</p>'; return; }
 
-  const latest = records[0];
+  const latest  = records[0];
   const general = latest.general;
   const periods = latest.periods || [];
 
@@ -716,7 +772,7 @@ function render24Hr(records) {
         <div class="general-icon">${gIcon}</div>
         <div class="general-info">
           <div class="general-forecast">${general.forecast?.text || '—'}</div>
-          <div style="font-size:0.78rem;color:var(--muted);margin-top:4px">${general.validPeriod?.text || ''}</div>
+          <div class="general-valid">${general.validPeriod?.text || ''}</div>
           <div class="general-meta">
             <span>🌡️ <strong>${general.temperature?.low ?? '—'}° – ${general.temperature?.high ?? '—'}°C</strong></span>
             <span>💧 <strong>${general.relativeHumidity?.low ?? '—'} – ${general.relativeHumidity?.high ?? '—'}%</strong></span>
@@ -755,42 +811,33 @@ function render24Hr(records) {
     html += `</div></div>`;
   }
 
-  html += `</div><button class="refresh-btn" onclick="loadAll()">&#8635; Refresh</button>`;
+  html += `</div><button class="refresh-btn" onclick="loadAll()">&#8635;&ensp;Refresh</button>`;
   el.innerHTML = html;
-}
-
-// ── Location banner (shown at top of 4-day and 24-hr tabs) ───────────────────
-function rerenderLocationBanner() {
-  // not implemented as a banner in this version – location is in header
 }
 
 // ── Render: 2-Hour ────────────────────────────────────────────────────────────
 function render2Hr(items, areaMetadata) {
   const el = document.getElementById('tab-two-hr');
-  if (!items || !items.length) { el.innerHTML = '<p style="color:var(--muted)">No data.</p>'; return; }
+  if (!items?.length) { el.innerHTML = '<p style="color:var(--muted)">No data available.</p>'; return; }
 
-  const latest = items[0];
-  const forecasts = latest.forecasts || [];
+  const latest     = items[0];
+  const forecasts  = latest.forecasts || [];
   const validPeriod = latest.valid_period;
 
-  // Group by region
-  const byRegion = { north: [], south: [], east: [], west: [], central: [] };
-  forecasts.forEach(f => {
-    const r = getRegion(f.area);
-    (byRegion[r] || byRegion.central).push(f);
-  });
-  for (const r of Object.keys(byRegion)) byRegion[r].sort((a, b) => a.area.localeCompare(b.area));
+  const byRegion = { north:[], south:[], east:[], west:[], central:[] };
+  forecasts.forEach(f => { (byRegion[getRegion(f.area)] || byRegion.central).push(f); });
+  for (const r of Object.keys(byRegion)) byRegion[r].sort((a,b) => a.area.localeCompare(b.area));
 
   const filterVal = selectedFilter;
 
-  // Controls bar
+  // Build dropdown
   let ddOptions = '';
   for (const [key, cfg] of Object.entries(REGIONS)) {
     const areas = byRegion[key];
     if (!areas.length) continue;
-    const regionSelected = filterVal === `region:${key}` ? ' selected' : '';
-    ddOptions += `<div class="dd-group-label dd-region-opt${regionSelected}" data-group="${key}" onclick="selectFilter('region:${key}')">
-      <span class="region-dot ${cfg.dotClass}" style="display:inline-block"></span>
+    const rSel = filterVal === `region:${key}` ? ' selected' : '';
+    ddOptions += `<div class="dd-group-label dd-region-opt${rSel}" data-group="${key}" onclick="selectFilter('region:${key}')">
+      <span class="region-dot ${cfg.dotClass}" style="display:inline-block;width:8px;height:8px;border-radius:50%"></span>
       ${cfg.label} Region
     </div>`;
     areas.forEach(f => {
@@ -803,7 +850,7 @@ function render2Hr(items, areaMetadata) {
   let html = `
     <div class="two-hr-controls">
       <div class="two-hr-valid">
-        2-Hour Forecast valid: <strong>${validPeriod?.text || '—'}</strong>
+        Valid: <strong>${validPeriod?.text || '—'}</strong>
       </div>
       <div class="dropdown-wrap" id="dd-wrap">
         <div class="dropdown-toggle" id="dd-toggle" onclick="toggleDropdown()">
@@ -820,46 +867,39 @@ function render2Hr(items, areaMetadata) {
       </div>
     </div>`;
 
-  // Location hint
+  // Your location banner
   if (userRegion) {
-    const myAreaForecast = userArea ? forecasts.find(f => f.area === userArea) : null;
+    const myFC = userArea ? forecasts.find(f => f.area === userArea) : null;
     html += `
-      <div id="your-location-banner" style="display:flex;background:linear-gradient(90deg,#0f3460,#1a1a4e);border:1px solid #3b4f8a;border-radius:var(--radius);padding:14px 18px;margin-bottom:14px;align-items:center;gap:14px">
-        <div style="font-size:1.8rem">${myAreaForecast ? weatherIcon(myAreaForecast.forecast) : '📍'}</div>
+      <div class="loc-banner">
+        <div class="loc-banner-icon">${myFC ? weatherIcon(myFC.forecast) : '📍'}</div>
         <div>
-          <div style="font-size:0.7rem;color:#93c5fd;text-transform:uppercase;letter-spacing:0.06em">Your Location</div>
-          <div style="font-size:1rem;font-weight:700">${userArea || REGIONS[userRegion].label + ' Region'}</div>
-          <div style="font-size:0.8rem;color:var(--muted)">${REGIONS[userRegion].label} Region</div>
-          ${myAreaForecast ? `<div style="font-size:0.85rem;color:#bfdbfe;margin-top:4px">${myAreaForecast.forecast}</div>` : ''}
+          <div class="loc-banner-label">Your Location</div>
+          <div class="loc-banner-area">${userArea || REGIONS[userRegion].label + ' Region'}</div>
+          <div class="loc-banner-region">${REGIONS[userRegion].label} Region</div>
+          ${myFC ? `<div class="loc-banner-fc">${myFC.forecast}</div>` : ''}
         </div>
       </div>`;
   }
 
-  // Area sections — filtered
-  const showAll = filterVal === 'all';
-  const isAreaFilter = !filterVal.startsWith('region:') && filterVal !== 'all';
-  const regionFilter = filterVal.startsWith('region:') ? filterVal.replace('region:', '') : null;
+  // Area sections
+  const isAreaFilter   = !filterVal.startsWith('region:') && filterVal !== 'all';
+  const regionFilter   = filterVal.startsWith('region:') ? filterVal.replace('region:', '') : null;
 
   for (const [key, cfg] of Object.entries(REGIONS)) {
     let areas = byRegion[key];
     if (!areas.length) continue;
+    if (isAreaFilter) { areas = areas.filter(f => f.area === filterVal); if (!areas.length) continue; }
+    else if (regionFilter && regionFilter !== key) continue;
 
-    // Apply filter
-    if (isAreaFilter) {
-      areas = areas.filter(f => f.area === filterVal);
-      if (!areas.length) continue;
-    } else if (regionFilter && regionFilter !== key) {
-      continue;
-    }
-
-    const count = showAll ? byRegion[key].length : areas.length;
+    const count = filterVal === 'all' ? byRegion[key].length : areas.length;
 
     html += `
       <div class="area-region-section">
         <div class="area-region-title">
           <div class="region-dot ${cfg.dotClass}"></div>
           ${cfg.label} Region
-          <span style="font-size:0.75rem;font-weight:400;color:var(--muted)">${count} area${count !== 1 ? 's' : ''}</span>
+          <span style="font-size:0.73rem;font-weight:300;color:var(--muted2);margin-left:2px">${count} area${count !== 1 ? 's' : ''}</span>
         </div>
         <div class="area-grid">`;
 
@@ -869,7 +909,7 @@ function render2Hr(items, areaMetadata) {
         <div class="area-card${isMe ? ' my-area' : ''}">
           <div class="area-icon">${weatherIcon(f.forecast)}</div>
           <div>
-            <div class="area-name">${f.area}${isMe ? ' <span style="color:var(--accent);font-size:0.65rem">● You</span>' : ''}</div>
+            <div class="area-name">${f.area}${isMe ? '&ensp;<span style="color:var(--accent);font-size:0.62rem;font-weight:700">● You</span>' : ''}</div>
             <div class="area-forecast-text">${f.forecast}</div>
           </div>
         </div>`;
@@ -878,13 +918,12 @@ function render2Hr(items, areaMetadata) {
     html += `</div></div>`;
   }
 
-  html += `<button class="refresh-btn" onclick="loadAll()">&#8635; Refresh</button>`;
+  html += `<button class="refresh-btn" onclick="loadAll()">&#8635;&ensp;Refresh</button>`;
   el.innerHTML = html;
-
-  // Close dropdown on outside click
   document.addEventListener('click', outsideClickHandler);
 }
 
+// ── Dropdown helpers ──────────────────────────────────────────────────────────
 function buildDropdownLabel(val) {
   if (val === 'all') return '&#127758; All Regions';
   if (val.startsWith('region:')) {
@@ -894,58 +933,43 @@ function buildDropdownLabel(val) {
   return '📍 ' + val;
 }
 
-// ── Dropdown logic ────────────────────────────────────────────────────────────
 function toggleDropdown() {
   const menu = document.getElementById('dd-menu');
   const toggle = document.getElementById('dd-toggle');
   if (!menu || !toggle) return;
   const isOpen = menu.classList.toggle('open');
   toggle.classList.toggle('open', isOpen);
-  if (isOpen) {
-    const search = document.getElementById('dd-search');
-    if (search) { search.value = ''; filterDropdown(''); search.focus(); }
-  }
+  if (isOpen) { const s = document.getElementById('dd-search'); if (s) { s.value = ''; filterDropdown(''); s.focus(); } }
 }
 
 function outsideClickHandler(e) {
   const wrap = document.getElementById('dd-wrap');
   if (wrap && !wrap.contains(e.target)) {
-    const menu = document.getElementById('dd-menu');
-    const toggle = document.getElementById('dd-toggle');
-    if (menu) menu.classList.remove('open');
-    if (toggle) toggle.classList.remove('open');
+    document.getElementById('dd-menu')?.classList.remove('open');
+    document.getElementById('dd-toggle')?.classList.remove('open');
     document.removeEventListener('click', outsideClickHandler);
   }
 }
 
 function filterDropdown(query) {
   const q = query.toLowerCase();
-  const opts   = document.querySelectorAll('#dd-options .dd-option');
-  const groups = document.querySelectorAll('#dd-options .dd-group-label');
-  const existing = document.getElementById('dd-no-results');
-  if (existing) existing.remove();
-
+  document.getElementById('dd-no-results')?.remove();
   let anyVisible = false;
   const visibleGroups = new Set();
 
-  opts.forEach(opt => {
-    const matches = opt.dataset.area.toLowerCase().includes(q);
-    opt.classList.toggle('hidden-opt', !matches);
-    if (matches) { anyVisible = true; visibleGroups.add(opt.dataset.region); }
+  document.querySelectorAll('#dd-options .dd-option').forEach(opt => {
+    const m = opt.dataset.area.toLowerCase().includes(q);
+    opt.classList.toggle('hidden-opt', !m);
+    if (m) { anyVisible = true; visibleGroups.add(opt.dataset.region); }
   });
 
-  groups.forEach(g => {
-    // also match group label text against query
-    const groupMatch = g.textContent.toLowerCase().includes(q);
-    const hasVisibleChild = visibleGroups.has(g.dataset.group);
-    g.style.display = (hasVisibleChild || groupMatch || !q) ? '' : 'none';
+  document.querySelectorAll('#dd-options .dd-group-label').forEach(g => {
+    const gm = g.textContent.toLowerCase().includes(q);
+    g.style.display = (visibleGroups.has(g.dataset.group) || gm || !q) ? '' : 'none';
   });
 
   if (!anyVisible && q) {
-    const div = document.createElement('div');
-    div.id = 'dd-no-results';
-    div.className = 'dd-no-results';
-    div.textContent = 'No areas found';
+    const div = Object.assign(document.createElement('div'), { id: 'dd-no-results', className: 'dd-no-results', textContent: 'No areas found' });
     document.getElementById('dd-options').appendChild(div);
   }
 }
@@ -954,12 +978,9 @@ function selectFilter(val) {
   selectedFilter = val;
   const labelEl = document.getElementById('dd-label');
   if (labelEl) labelEl.innerHTML = buildDropdownLabel(val);
-  const menu = document.getElementById('dd-menu');
-  const toggle = document.getElementById('dd-toggle');
-  if (menu) menu.classList.remove('open');
-  if (toggle) toggle.classList.remove('open');
+  document.getElementById('dd-menu')?.classList.remove('open');
+  document.getElementById('dd-toggle')?.classList.remove('open');
   document.removeEventListener('click', outsideClickHandler);
-
   if (cachedData2) render2Hr(cachedData2.items, cachedData2.area_metadata);
 }
 
@@ -979,21 +1000,14 @@ async function loadAll() {
     ]);
 
     cachedData2 = data2;
-
-    // If geolocation was already granted, find nearest area
-    if (userRegion && !userArea && data2.area_metadata) {
-      // Can't re-derive position without re-requesting, so keep existing
-    }
-
     render4Day(data4.records);
     render24Hr(data24.records);
     render2Hr(data2.items, data2.area_metadata);
 
     document.getElementById('last-updated').textContent =
-      'Last fetched: ' + new Date().toLocaleTimeString('en-SG', { timeZone: 'Asia/Singapore', hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' SGT';
+      'Last fetched: ' + new Date().toLocaleTimeString('en-SG', { timeZone:'Asia/Singapore', hour:'2-digit', minute:'2-digit', second:'2-digit' }) + ' SGT';
 
-    const activeTab = document.querySelector('.tab.active').dataset.tab;
-    document.getElementById('tab-' + activeTab).classList.remove('hidden');
+    document.getElementById('tab-' + document.querySelector('.tab.active').dataset.tab).classList.remove('hidden');
 
   } catch (err) {
     errEl.textContent = 'Failed to load weather data: ' + err.message;
