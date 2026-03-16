@@ -53,6 +53,13 @@
       margin-top: 5px;
       font-weight: 300;
     }
+    #live-clock {
+      font-size: 1.05rem;
+      font-weight: 700;
+      opacity: 0.92;
+      margin-top: 6px;
+      letter-spacing: 0.03em;
+    }
 
     /* Location bar */
     #location-bar {
@@ -104,12 +111,13 @@
       border-bottom: 2px solid var(--border);
       overflow-x: auto;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
     .tabs::-webkit-scrollbar { display: none; }
     .tab {
       flex: 1;
       min-width: 120px;
-      padding: 14px 10px;
+      padding: 15px 10px;
       text-align: center;
       font-size: 0.82rem;
       font-weight: 700;
@@ -162,7 +170,7 @@
       font-size: 0.85rem;
     }
 
-    /* ── Section title (H2 Subhead style) ── */
+    /* ── Section title ── */
     .section-title {
       font-size: 0.78rem;
       font-weight: 700;
@@ -483,7 +491,7 @@
     .loc-banner-region{ font-size: 0.78rem; font-weight: 300; color: var(--muted); }
     .loc-banner-fc    { font-size: 0.85rem; font-weight: 700; color: var(--accent); margin-top: 4px; }
 
-    /* Region color dots (kept distinct) */
+    /* Region color dots */
     .north-dot   { background: #0ea5e9; }
     .south-dot   { background: #16a34a; }
     .east-dot    { background: #ea580c; }
@@ -525,6 +533,99 @@
       margin-left: 4px;
     }
 
+    /* ── Hourly Tab ── */
+    .hourly-scroll {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 8px 0 16px;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+    .hourly-scroll::-webkit-scrollbar { height: 4px; }
+    .hourly-scroll::-webkit-scrollbar-track { background: var(--surface2); border-radius: 4px; }
+    .hourly-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    .hour-card {
+      flex: 0 0 auto;
+      min-width: 80px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 0.8rem;
+      transition: box-shadow 0.15s;
+    }
+    .hour-card.now { border-color: var(--accent); background: var(--accent-lt); }
+    .hour-card:hover { box-shadow: 0 2px 10px rgba(17,85,204,0.1); }
+    .hour-label { font-weight: 700; color: var(--accent); font-size: 0.75rem; }
+    .hour-now-tag { font-size: 0.6rem; color: var(--accent); display: block; }
+    .hour-icon { font-size: 1.5rem; margin: 6px 0 4px; }
+    .hour-temp { font-weight: 700; font-size: 0.88rem; }
+    .hour-humid { color: var(--muted); font-size: 0.7rem; margin-top: 2px; }
+    .hour-desc { color: var(--muted); font-size: 0.65rem; margin-top: 3px; line-height: 1.3; }
+
+    .hourly-current {
+      background: var(--accent-lt);
+      border: 1.5px solid #b3cfea;
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+    }
+    .hourly-current-label { font-size: 0.67rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .hourly-current-val { font-size: 1.6rem; font-weight: 700; }
+    .hourly-current-unit { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── View Online Tab ── */
+    #online-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      height: calc(100vh - 220px);
+      min-height: 480px;
+    }
+    #online-frame {
+      flex: 1;
+      border: none;
+      border-radius: var(--radius);
+      width: 100%;
+      background: var(--surface2);
+    }
+    #online-fallback {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    #online-fallback a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    #online-fallback a:hover { text-decoration: underline; }
+
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      header { padding: 18px 14px 16px; }
+      header h1 { font-size: 1.3rem; }
+      #live-clock { font-size: 0.92rem; }
+      main { padding: 16px 10px 48px; }
+      .tab { min-width: 90px; padding: 13px 8px; font-size: 0.76rem; }
+      .four-day-grid { grid-template-columns: 1fr 1fr; }
+      .region-grid { grid-template-columns: 1fr 1fr; }
+      .area-grid { grid-template-columns: 1fr 1fr; }
+      .general-summary { flex-direction: column; gap: 10px; padding: 14px 16px; }
+      .general-icon { font-size: 2.2rem; }
+      .two-hr-controls { flex-direction: column; }
+      .hourly-scroll { gap: 8px; }
+      .hour-card { min-width: 70px; padding: 10px 6px; }
+      .hourly-current { gap: 16px; padding: 14px 16px; }
+      #online-wrap { height: calc(100vh - 180px); }
+    }
+
     .hidden { display: none !important; }
   </style>
 </head>
@@ -533,6 +634,7 @@
 <header>
   <h1>&#127961; Singapore Weather</h1>
   <p>Real-time forecasts from data.gov.sg</p>
+  <div id="live-clock"></div>
   <div id="last-updated"></div>
   <div id="location-bar">
     <div id="location-info" style="display:none">
@@ -547,6 +649,8 @@
   <div class="tab active" data-tab="four-day">4-Day Outlook</div>
   <div class="tab" data-tab="twenty-four">24-Hour (Regional)</div>
   <div class="tab" data-tab="two-hr">2-Hour (Areas)</div>
+  <div class="tab" data-tab="hourly">&#9203; Hourly</div>
+  <div class="tab" data-tab="online">&#127760; View Online</div>
 </div>
 
 <main>
@@ -556,15 +660,52 @@
   <div id="tab-four-day"    class="tab-content hidden"></div>
   <div id="tab-twenty-four" class="tab-content hidden"></div>
   <div id="tab-two-hr"      class="tab-content hidden"></div>
+  <div id="tab-hourly"      class="tab-content hidden"></div>
+  <div id="tab-online"      class="tab-content hidden">
+    <div id="online-wrap">
+      <p id="online-fallback">
+        If the embedded view doesn't load, <a href="https://icemochabun.github.io/singapore-weather-forecast/" target="_blank" rel="noopener">open in browser &#8599;</a>
+      </p>
+      <iframe id="online-frame" title="Singapore Weather (Online)" loading="lazy"></iframe>
+    </div>
+  </div>
 </main>
 
 <script>
+// Anti-recursion: hide "View Online" tab if we're already inside an iframe
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('[data-tab="online"]')?.remove();
+    document.getElementById('tab-online')?.remove();
+  });
+}
+
 const BASE = 'https://api-open.data.gov.sg/v2/real-time/api';
 
 let userRegion     = null;
 let userArea       = null;
+let userLat        = null;
+let userLon        = null;
 let cachedData2    = null;
+let cachedData24   = null;
 let selectedFilter = 'all';
+let hourlyLoaded   = false;
+let onlineInited   = false;
+
+// ── Live Clock ────────────────────────────────────────────────────────────────
+function startClock() {
+  function tick() {
+    const el = document.getElementById('live-clock');
+    if (el) {
+      el.textContent = new Date().toLocaleTimeString('en-SG', {
+        timeZone: 'Asia/Singapore',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      }) + ' SGT';
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+}
 
 // ── Weather icon ──────────────────────────────────────────────────────────────
 function weatherIcon(text) {
@@ -654,29 +795,33 @@ function nearestArea(lat, lon, areaMetadata) {
 }
 
 // ── Geolocation ───────────────────────────────────────────────────────────────
-function detectLocation() {
+function detectLocation(silent = false) {
   const btn = document.getElementById('detect-btn');
-  btn.textContent = '⏳ Locating…';
-  btn.disabled = true;
-  if (!navigator.geolocation) { btn.textContent = '📍 Not supported'; btn.disabled = false; return; }
+  if (btn) { btn.textContent = '⏳ Locating…'; btn.disabled = true; }
+  if (!navigator.geolocation) {
+    if (btn) { btn.textContent = '📍 Not supported'; btn.disabled = false; }
+    return;
+  }
 
   navigator.geolocation.getCurrentPosition(pos => {
     const { latitude: lat, longitude: lon } = pos.coords;
+    userLat = lat;
+    userLon = lon;
     userRegion = latLonToRegion(lat, lon);
     if (cachedData2?.items?.[0]) userArea = nearestArea(lat, lon, cachedData2.area_metadata);
 
     document.getElementById('location-info').style.display = 'flex';
     document.getElementById('location-text').textContent =
       `${REGIONS[userRegion].label} Region${userArea ? ' · ' + userArea : ''}`;
-    btn.textContent = '↺ Re-detect';
-    btn.disabled = false;
+    if (btn) { btn.textContent = '↺ Re-detect'; btn.disabled = false; }
 
     if (cachedData2) render2Hr(cachedData2.items, cachedData2.area_metadata);
     highlightMyRegion();
+    // Reset hourly so it re-renders with new location on next visit
+    hourlyLoaded = false;
   }, () => {
-    btn.textContent = '🌍 Detect My Location';
-    btn.disabled = false;
-    alert('Location access denied or unavailable.');
+    if (btn) { btn.textContent = '📍 Detect My Location'; btn.disabled = false; }
+    if (!silent) alert('Location access denied or unavailable.');
   }, { timeout: 10000 });
 }
 
@@ -714,7 +859,10 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
     tab.classList.add('active');
-    document.getElementById('tab-' + tab.dataset.tab).classList.remove('hidden');
+    const tabId = tab.dataset.tab;
+    document.getElementById('tab-' + tabId).classList.remove('hidden');
+    if (tabId === 'hourly') loadHourly();
+    if (tabId === 'online') initOnlineFrame();
   });
 });
 
@@ -984,13 +1132,188 @@ function selectFilter(val) {
   if (cachedData2) render2Hr(cachedData2.items, cachedData2.area_metadata);
 }
 
+// ── Hourly Tab ────────────────────────────────────────────────────────────────
+async function loadHourly() {
+  if (hourlyLoaded) return;
+  const el = document.getElementById('tab-hourly');
+  if (!el) return;
+
+  el.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;min-height:220px;gap:14px;color:var(--muted)"><div class="spinner"></div><span>Loading hourly data…</span></div>';
+
+  try {
+    const todaySGT = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Singapore' });
+
+    const [tempRes, humidRes] = await Promise.all([
+      fetch(`${BASE}/air-temperature?date=${todaySGT}`),
+      fetch(`${BASE}/relative-humidity?date=${todaySGT}`)
+    ]);
+
+    if (!tempRes.ok) throw new Error(`Temperature API: HTTP ${tempRes.status}`);
+    if (!humidRes.ok) throw new Error(`Humidity API: HTTP ${humidRes.status}`);
+
+    const [tempJson, humidJson] = await Promise.all([tempRes.json(), humidRes.json()]);
+
+    if (tempJson.code !== 0) throw new Error(tempJson.errorMsg || 'Temperature API error');
+    if (humidJson.code !== 0) throw new Error(humidJson.errorMsg || 'Humidity API error');
+
+    renderHourly(tempJson.data, humidJson.data);
+    hourlyLoaded = true;
+  } catch (err) {
+    el.innerHTML = `
+      <div style="background:#fff0f0;border:1.5px solid #f5c6c6;border-radius:var(--radius);padding:14px 18px;color:#b91c1c;font-size:0.85rem;margin-bottom:12px">
+        Failed to load hourly data: ${err.message}
+      </div>
+      <button class="refresh-btn" onclick="hourlyLoaded=false;loadHourly()">&#8635;&ensp;Retry</button>`;
+  }
+}
+
+function renderHourly(tempData, humidData) {
+  const el = document.getElementById('tab-hourly');
+  const stations    = tempData?.stations || [];
+  const tempReadings  = tempData?.readings  || [];
+  const humidReadings = humidData?.readings || [];
+
+  // Find nearest station to user location (default: Singapore centre)
+  const lat = (typeof userLat === 'number') ? userLat : 1.3521;
+  const lon = (typeof userLon === 'number') ? userLon : 103.8198;
+
+  let nearestStationId = null, bestDist = Infinity;
+  for (const s of stations) {
+    if (!s.location) continue;
+    const d = Math.pow(s.location.latitude - lat, 2) + Math.pow(s.location.longitude - lon, 2);
+    if (d < bestDist) { bestDist = d; nearestStationId = s.id; }
+  }
+  const stationName = nearestStationId
+    ? (stations.find(s => s.id === nearestStationId)?.name || 'Nearest Station')
+    : 'Singapore';
+
+  // Build { hour → { temp, humid } } map from readings
+  const hourData = {};
+  function sgtHour(ts) {
+    return parseInt(new Date(ts).toLocaleString('en-US', { timeZone: 'Asia/Singapore', hour: 'numeric', hour12: false }));
+  }
+
+  for (const reading of tempReadings) {
+    const h = sgtHour(reading.timestamp);
+    if (!hourData[h]) hourData[h] = {};
+    const entry = nearestStationId
+      ? reading.data?.find(d => d.stationId === nearestStationId)
+      : reading.data?.[0];
+    if (entry?.value != null) hourData[h].temp = entry.value.toFixed(1);
+  }
+
+  for (const reading of humidReadings) {
+    const h = sgtHour(reading.timestamp);
+    if (!hourData[h]) hourData[h] = {};
+    const entry = nearestStationId
+      ? reading.data?.find(d => d.stationId === nearestStationId)
+      : reading.data?.[0];
+    if (entry?.value != null) hourData[h].humid = Math.round(entry.value);
+  }
+
+  // Build forecast period map (hour → { icon, text }) from cached 24hr data
+  const periodMap = {};
+  if (cachedData24?.records?.[0]?.periods) {
+    for (const period of cachedData24.records[0].periods) {
+      if (!period.timePeriod?.text) continue;
+      // Parse "6 am to 12 pm" style text
+      const m = period.timePeriod.text.match(/(\d+)\s*(am|pm)\s+to\s+(\d+)\s*(am|pm)/i);
+      if (!m) continue;
+      let h1 = parseInt(m[1]), h2 = parseInt(m[3]);
+      if (m[2].toLowerCase() === 'pm' && h1 !== 12) h1 += 12;
+      if (m[2].toLowerCase() === 'am' && h1 === 12) h1 = 0;
+      if (m[4].toLowerCase() === 'pm' && h2 !== 12) h2 += 12;
+      if (m[4].toLowerCase() === 'am' && h2 === 12) h2 = 24;
+      const regionKey = userRegion || 'central';
+      const text = period.regions?.[regionKey]?.text || period.regions?.central?.text || '';
+      for (let h = h1; h < h2; h++) periodMap[h] = { text, icon: weatherIcon(text) };
+    }
+  }
+
+  const currentHour = sgtHour(new Date().toISOString());
+  const hours = Object.keys(hourData).map(Number).sort((a, b) => a - b);
+
+  if (!hours.length) {
+    el.innerHTML = '<p style="color:var(--muted);padding:20px 0">No hourly sensor readings available yet for today.</p>';
+    return;
+  }
+
+  const cur = hourData[currentHour] || hourData[hours[hours.length - 1]];
+
+  let html = `<div class="section-title">Hourly Weather Today &mdash; ${stationName}</div>`;
+
+  if (cur) {
+    html += `
+      <div class="hourly-current">
+        <div>
+          <div class="hourly-current-label">&#127777;&#65039; Temperature now</div>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-top:4px">
+            ${cur.temp
+              ? `<span class="hourly-current-val">${cur.temp}</span><span class="hourly-current-unit">°C</span>`
+              : '<span class="hourly-current-val" style="color:var(--muted)">—</span>'}
+          </div>
+        </div>
+        ${cur.humid != null ? `
+        <div>
+          <div class="hourly-current-label">&#128167; Humidity now</div>
+          <div style="display:flex;align-items:baseline;gap:4px;margin-top:4px">
+            <span class="hourly-current-val">${cur.humid}</span><span class="hourly-current-unit">%</span>
+          </div>
+        </div>` : ''}
+        ${periodMap[currentHour]?.text ? `
+        <div>
+          <div class="hourly-current-label">&#127780;&#65039; Forecast</div>
+          <div style="font-size:0.95rem;font-weight:700;margin-top:4px">${periodMap[currentHour].icon} ${periodMap[currentHour].text}</div>
+        </div>` : ''}
+      </div>`;
+  }
+
+  html += `<div class="section-title">Readings by Hour</div><div class="hourly-scroll">`;
+
+  for (const h of hours) {
+    const d = hourData[h];
+    const isNow = h === currentHour;
+    const label = String(h).padStart(2, '0') + ':00';
+    const period = periodMap[h] || {};
+    const icon = period.icon || '🌡️';
+
+    html += `
+      <div class="hour-card${isNow ? ' now' : ''}">
+        <div class="hour-label">${label}</div>
+        ${isNow ? '<span class="hour-now-tag">NOW</span>' : ''}
+        <div class="hour-icon">${icon}</div>
+        <div class="hour-temp">${d.temp ? d.temp + '°' : '—'}</div>
+        ${d.humid != null ? `<div class="hour-humid">${d.humid}%</div>` : ''}
+        ${period.text ? `<div class="hour-desc">${period.text.length > 14 ? period.text.slice(0,13) + '…' : period.text}</div>` : ''}
+      </div>`;
+  }
+
+  html += `</div>`;
+  html += `<p style="font-size:0.72rem;color:var(--muted2);margin-top:8px;font-weight:300">Real-time station readings from data.gov.sg &bull; Updates every 5 min</p>`;
+  html += `<button class="refresh-btn" onclick="hourlyLoaded=false;loadHourly()">&#8635;&ensp;Refresh Hourly</button>`;
+
+  el.innerHTML = html;
+}
+
+// ── View Online Tab ───────────────────────────────────────────────────────────
+function initOnlineFrame() {
+  if (onlineInited) return;
+  onlineInited = true;
+  const frame = document.getElementById('online-frame');
+  if (frame) frame.src = 'https://icemochabun.github.io/singapore-weather-forecast/';
+}
+
 // ── Main loader ───────────────────────────────────────────────────────────────
 async function loadAll() {
   const loader = document.getElementById('loader');
   const errEl  = document.getElementById('error-msg');
   errEl.style.display = 'none';
   loader.classList.remove('hidden');
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+
+  // Only hide the main 3 data tabs — leave hourly/online undisturbed
+  ['four-day', 'twenty-four', 'two-hr'].forEach(id => {
+    document.getElementById('tab-' + id)?.classList.add('hidden');
+  });
 
   try {
     const [data4, data24, data2] = await Promise.all([
@@ -999,7 +1322,11 @@ async function loadAll() {
       fetchAPI('/two-hr-forecast'),
     ]);
 
-    cachedData2 = data2;
+    cachedData2  = data2;
+    cachedData24 = data24;
+    // Reset hourly so new forecast data is reflected next time user opens Hourly tab
+    hourlyLoaded = false;
+
     render4Day(data4.records);
     render24Hr(data24.records);
     render2Hr(data2.items, data2.area_metadata);
@@ -1007,7 +1334,13 @@ async function loadAll() {
     document.getElementById('last-updated').textContent =
       'Last fetched: ' + new Date().toLocaleTimeString('en-SG', { timeZone:'Asia/Singapore', hour:'2-digit', minute:'2-digit', second:'2-digit' }) + ' SGT';
 
-    document.getElementById('tab-' + document.querySelector('.tab.active').dataset.tab).classList.remove('hidden');
+    // Show whichever of the 3 main tabs is active (ignore hourly/online)
+    const activeTab = document.querySelector('.tab.active')?.dataset.tab;
+    if (['four-day', 'twenty-four', 'two-hr'].includes(activeTab)) {
+      document.getElementById('tab-' + activeTab).classList.remove('hidden');
+    } else if (!['hourly', 'online'].includes(activeTab)) {
+      document.getElementById('tab-four-day').classList.remove('hidden');
+    }
 
   } catch (err) {
     errEl.textContent = 'Failed to load weather data: ' + err.message;
@@ -1018,6 +1351,9 @@ async function loadAll() {
   }
 }
 
+// ── Init ──────────────────────────────────────────────────────────────────────
+startClock();
+detectLocation(true);   // auto-detect silently on load
 loadAll();
 setInterval(loadAll, 5 * 60 * 1000);
 </script>
